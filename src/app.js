@@ -22,6 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
 // Routes
+app.use(express.static('public'));
 app.use(authRouter);
 app.use(additionalRouter);
 // Catchalls

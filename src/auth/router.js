@@ -41,6 +41,7 @@ authRouter.get('/user', bearerAuth, (req, res, next) => {
 });
 
 authRouter.get('/oauth', (req,res,next) => {
+  console.log(req);
   oauth.authorize(req)
     .then( token => {
       res.status(200).send(token);
