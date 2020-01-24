@@ -23,9 +23,7 @@ const authorize = (req) => {
       return access_token;
     })
     .then(token => {
-      // return superagent.get('https://www.googleapis.com/plus/v1/people/me/openIdConnect')
       return superagent.get('https://openidconnect.googleapis.com/v1/userinfo')
-        // .query({personFields: 'names, emailAddresses'})
         .set('Authorization', `Bearer ${token}`)
         .then( response => {
           let user = response.body;

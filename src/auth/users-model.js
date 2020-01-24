@@ -32,11 +32,12 @@ users.pre('save', async function() {
   }
 });
 
-users.statics.createFromOauth = function(email) {
+users.statics.createFromOAuth = function(oauthUser) {
+  console.log('user', oauthUser);
 
-  if(! email) { return Promise.reject('Validation Error'); }
+  if(!oauthUser) { return Promise.reject('Validation Error'); }
 
-  return this.findOne( {email} )
+  return this.findOne( {email: `${oauthUser.email}`} )
     .then(user => {
       if( !user ) { throw new Error('User Not Found'); }
       console.log('Welcome Back', user.username);
@@ -44,8 +45,9 @@ users.statics.createFromOauth = function(email) {
     })
     .catch( error => {
       console.log('Creating new user');
-      let username = email;
+      let username = oauthUser.email;
       let password = 'none';
+      let email = oauthUser.email;
       return this.create({username, password, email});
     });
 };
