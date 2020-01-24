@@ -1,9 +1,11 @@
 'use strict';
 
+require('dotenv').config('../.env');
+require('./roles-model');
+
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-require('./roles-model');
 
 let capabilities = {
   user: ['read'],
@@ -56,7 +58,7 @@ users.statics.authenticateToken = function(token){
   if(usedTokens.has(token)){
     return Promise.reject('invalid token');
   }
-  let parsedToken = jwt.verify(token, SECRET);
+  let parsedToken = jwt.verify(token, process.env.SECRET);
 
   // (SINGLE_USE_TOKENS) && parsedToken.type !== 'key' && usedTokens.add(token);
 
@@ -84,7 +86,7 @@ users.methods.generateToken = function() {
     role: this.role,
   };
 
-  return jwt.sign(token, process.env.SECRET);
+  return jwt.sign(token, process.env.SECRET, {expiresIn: '60s'});
 };
 
 module.exports = mongoose.model('users', users);
