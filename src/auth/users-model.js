@@ -3,12 +3,26 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+require('./roles-model');
+
+let capabilities = {
+  user: ['read'],
+  editor: ['read', 'create', 'update'],
+  admin: ['read', 'create', 'update', 'delete'],
+};
 
 const users = new mongoose.Schema({
   username: {type:String, required:true, unique:true},
   password: {type:String, required:true},
   email: {type: String},
   role: {type: String, default:'user', enum: ['admin','editor','user']},
+}, {toObject: {virtuals: true}, toJSON: {virtuals: true}});
+
+users.virtual('userRole', {
+  ref: 'roles',
+  localField: 'role',
+  foreignField: 'type',
+  justOne: false,
 });
 
 users.pre('save', async function() {
@@ -64,6 +78,7 @@ users.methods.generateToken = function() {
 
   let token = {
     id: this._id,
+    capabilities: capabilities[this.role],
     role: this.role,
   };
 
