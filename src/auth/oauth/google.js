@@ -8,13 +8,13 @@ const authorize = (req) => {
   let code = req.query.code;
   console.log('(1) CODE:', code);
 
-  return superagent.post('https://www.googleapis.com/oauth2/v4/token')
+  return superagent.post('https://oauth2.googleapis.com/token')
     .type('form')
     .send({
       code: code,
-      client_id: process.env.GOOGLE_CLIENT_ID,
-      client_secret: process.env.GOOGLE_CLIENT_SECRET,
-      redirect_uri: `${process.env.API_URL}/oauth`,
+      client_id: process.env.CLIENT_ID,
+      client_secret: process.env.CLIENT_SECRET,
+      redirect_uri: process.env.REDIRECT,
       grant_type: 'authorization_code',
     })
     .then( response => {
@@ -23,7 +23,9 @@ const authorize = (req) => {
       return access_token;
     })
     .then(token => {
-      return superagent.get('https://www.googleapis.com/plus/v1/people/me/openIdConnect')
+      // return superagent.get('https://www.googleapis.com/plus/v1/people/me/openIdConnect')
+      return superagent.get('https://openidconnect.googleapis.com/v1/userinfo')
+        // .query({personFields: 'names, emailAddresses'})
         .set('Authorization', `Bearer ${token}`)
         .then( response => {
           let user = response.body;

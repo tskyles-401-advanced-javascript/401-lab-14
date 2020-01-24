@@ -17,12 +17,13 @@
     //link to github oauth
     // let url = "https://github.com/login/oauth/authorize";
     let url = 'https://accounts.google.com/o/oauth2/v2/auth';
+    console.log(url);
     // query options
     let options = {
-      client_id: '1045776849842-kjnmkrclr6ccm750c1psjasn73u5tk2t.apps.googleusercontent.com',
+      client_id: '521599594748-viaklq1jp4bprmor49nkhk0bn1a2hpr7.apps.googleusercontent.com',
       redirect_uri: 'http://localhost:3000/oauth',
       response_type: 'code',
-      scope: 'https://www.googleapis.com/auth/userinfo.profile',
+      scope: 'openid profile email',
       state: '401appconsent',
     };
     // create query string for request
