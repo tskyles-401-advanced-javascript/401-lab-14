@@ -29,6 +29,15 @@ users.virtual('userRole', {
   justOne: false,
 });
 
+users.pre('findOne', async function(){
+  try{
+    this.populate('userRole');
+  }
+  catch(error){
+    console.error('find error', error);
+  }
+});
+
 users.pre('save', async function() {
   if (this.isModified('password'))
   {
