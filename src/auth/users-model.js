@@ -7,6 +7,8 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+let usedTokens = new Set();
+
 let capabilities = {
   user: ['read'],
   editor: ['read', 'create', 'update'],
@@ -55,12 +57,13 @@ users.statics.createFromOAuth = function(oauthUser) {
 };
 
 users.statics.authenticateToken = function(token){
-  if(usedTokens.has(token)){
+
+  if((process.env.SINGLE_USE_TOKENS === 'true') && usedTokens.has(token)){
+    console.log('nope');
     return Promise.reject('invalid token');
   }
   let parsedToken = jwt.verify(token, process.env.SECRET);
-
-  // (SINGLE_USE_TOKENS) && parsedToken.type !== 'key' && usedTokens.add(token);
+  usedTokens.add(token);
 
   let query = {_id: parsedToken.id };
   return this.findOne(query);
@@ -85,8 +88,8 @@ users.methods.generateToken = function() {
     capabilities: capabilities[this.role],
     role: this.role,
   };
-
-  return jwt.sign(token, process.env.SECRET, {expiresIn: '15m'});
+  
+  return jwt.sign(token, process.env.SECRET, {expiresIn: process.env.TOKEN_EXPIRES});
 };
 
 module.exports = mongoose.model('users', users);
