@@ -1,6 +1,8 @@
 'use strict';
 const User = require('../model/users-model');
-
+/** 
+ * @module BearerAuth
+*/
 module.exports = (req, res, next) => {
 
   if (!req.headers.authorization) { next('Invalid Login'); return;}

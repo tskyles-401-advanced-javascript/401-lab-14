@@ -1,7 +1,9 @@
 'use strict';
 
 const User = require('../model/users-model');
-
+/** 
+ * @module BasicAuth
+*/
 module.exports = (req, res, next) => {
   
   try {
@@ -18,7 +20,12 @@ module.exports = (req, res, next) => {
     next(e);
   }
   
-  
+  /**
+   *
+   *
+   * @param {*} str
+   * @returns user with token
+   */
   function _authBasic(str) {
     // str: am9objpqb2hubnk=
     let base64Buffer = Buffer.from(str, 'base64'); // <Buffer 01 02 ...>
@@ -30,7 +37,11 @@ module.exports = (req, res, next) => {
       .then(user => _authenticate(user) )
       .catch(next);
   }
-
+  /**
+ *
+ *
+ * @param {*} user
+ */
   function _authenticate(user) {
     if(user) {
       req.user = user;
@@ -41,7 +52,10 @@ module.exports = (req, res, next) => {
       _authError();
     }
   }
-  
+  /**
+   *
+   * @function authError
+   */
   function _authError() {
     next('Invalid User ID/Password');
   }

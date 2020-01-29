@@ -44,7 +44,9 @@ users.pre('save', async function() {
     this.password = await bcrypt.hash(this.password, 10);
   }
 });
-
+/** 
+ * @method createFromOAuth
+*/
 users.statics.createFromOAuth = function(oauthUser) {
   console.log('user', oauthUser);
 
@@ -64,7 +66,9 @@ users.statics.createFromOAuth = function(oauthUser) {
       return this.create({username, password, email});
     });
 };
-
+/** 
+ * @method authenticateToken
+*/
 users.statics.authenticateToken = function(token){
 
   if((process.env.SINGLE_USE_TOKENS === 'true') && usedTokens.has(token)){
@@ -77,19 +81,25 @@ users.statics.authenticateToken = function(token){
   let query = {_id: parsedToken.id };
   return this.findOne(query);
 };
-
+/** 
+ * @method authenticateBasic
+*/
 users.statics.authenticateBasic = function(auth) {
   let query = {username:auth.username};
   return this.findOne(query)
     .then( user => user && user.comparePassword(auth.password) )
     .catch(error => {throw error;});
 };
-
+/** 
+ * @method comparePassword
+*/
 users.methods.comparePassword = function(password) {
   return bcrypt.compare( password, this.password )
     .then( valid => valid ? this : null);
 };
-
+/** 
+ * @method generateToken
+*/
 users.methods.generateToken = function() {
 
   let token = {
@@ -100,5 +110,7 @@ users.methods.generateToken = function() {
   
   return jwt.sign(token, process.env.SECRET, {expiresIn: process.env.TOKEN_EXPIRES});
 };
-
+/** 
+ * @module User
+*/
 module.exports = mongoose.model('users', users);

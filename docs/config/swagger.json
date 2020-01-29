@@ -1,0 +1,74 @@
+{
+  "swagger": "2.0",
+  "OpenAPI": "1.0.1",
+  "info": {
+    "title": "User Auth",
+    "description": "Authentication and Authorization",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/"
+    }
+  ],
+  "paths": {
+    "/users": {
+      "get": {
+        "description": "Get all Users",
+        "responses": {
+          "200": {
+            "description": "Returns all users within the database in JSON format",
+            "content": {
+              "*/*": {
+                "schema": {
+                  "$ref": "#/components/schemas/getAll"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/signup": {
+      "post": {
+        "description": "Creates a new user and saves to the database",
+        "responses": {
+          "200": {
+            "description": "Receives generated token"
+          }
+        }
+      }
+    },
+    "/signin": {
+      "post": {
+        "description": "Authorizes user by comparing hashed passwords",
+        "responses": {
+          "200": {
+            "description": "Receives generated token"
+          }
+        }
+      }
+    },
+    "/docs": {
+      "post": {
+        "description": "Documentation for code methods and functions",
+        "responses": {
+          "200": {
+            "description": "Go to website with documentation"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "getAll": {
+        "type": "object",
+        "example": [
+          "{}",
+          "{}"
+        ]
+      }
+    }
+  }
+}
