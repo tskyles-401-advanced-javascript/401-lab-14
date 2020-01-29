@@ -46,7 +46,7 @@ supergoose.stopDB = () => {
 
 // Just so that it can live in the tests folder
 describe('supergoose', () => {
-  it('is super', () => {
+  xit('is super', () => {
     expect(true).toBeTruthy();
   });
 });
