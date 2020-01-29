@@ -1,52 +1,47 @@
 'use strict';
 
-process.env.SECRET='test';
+process.env.SECRET = 'Donttellitssecret';
 
 const jwt = require('jsonwebtoken');
+const {server} = require('../../../src/app');
+const supergoose = require('@code-fellows/supergoose');
+const mockRequest = supergoose(server);
 
-const server = require('../../../src/app.js').server;
-const supergoose = require('../../supergoose.js');
-
-const mockRequest = supergoose.server(server);
-
-let users = {
-  admin: {username: 'admin', password: 'password', role: 'admin'},
-  editor: {username: 'editor', password: 'password', role: 'editor'},
-  user: {username: 'user', password: 'password', role: 'user'},
-};
-
-beforeAll(supergoose.startDB);
-afterAll(supergoose.stopDB);
 
 describe('Auth Router', () => {
+  let testUser = {
+    username: 'test',
+    password: 'pass',
+  };
 
-  Object.keys(users).forEach( userType => {
-
-    describe(`${userType} users`, () => {
-
-      let id;
-
-      it('can create one', () => {
-        return mockRequest.post('/signup')
-          .send(users[userType])
-          .then(results => {
-            var token = jwt.verify(results.text, process.env.SECRET);
-            id = token.id;
-            expect(token.id).toBeDefined();
-          });
+  xit('can create a user', () => {
+    return mockRequest.post('/signup')
+      .send(testUser)
+      .then(data => {
+        let token = jwt.verify(data.text, process.env.SECRET);
+        expect(token).toBeDefined();
       });
-
-      it('can signin with basic', () => {
-        return mockRequest.post('/signin')
-          .auth(users[userType].username, users[userType].password)
-          .then(results => {
-            var token = jwt.verify(results.text, process.env.SECRET);
-            expect(token.id).toEqual(id);
-          });
-      });
-
-    });
-
   });
-
+  xit('returns all users', () => {
+    return mockRequest.get('/users')
+      .then(data => {
+        expect(data.body.count).toEqual(1);
+      });
+  });
+  xit('signs in a user', () => {
+    return mockRequest.post('/signin')
+      .auth(testUser.username, testUser.password)
+      .then(data => {
+        let token = jwt.verify(data.text, process.env.SECRET);
+        expect(token).toBeDefined();
+      });
+  });
+  xit('returns invalid on sign in if password is wrong', () => {
+    return mockRequest.post('/signin')
+      .auth(testUser.username, 'wrongpassword')
+      .then(data => {
+        expect(data.status).toBe(500);
+      });
+  });
 });
+

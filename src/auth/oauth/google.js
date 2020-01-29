@@ -1,7 +1,7 @@
 'use strict';
 
 const superagent = require('superagent');
-const Users = require('../users-model.js');
+const Users = require('../../model/users-model');
 
 const authorize = (req) => {
 

@@ -6,9 +6,9 @@ const cors = require('cors');
 const morgan = require('morgan');
 
 // Esoteric Resources
-const errorHandler = require( './middleware/500.js');
+const errorHandler = require( './middleware/500');
 const notFound = require( './middleware/404.js' );
-const authRouter = require( './auth/router.js' );
+const authRouter = require( './router');
 const additionalRouter = require('./auth/additional-routes');
 
 // Prepare the express app

@@ -3,10 +3,10 @@
 const express = require('express');
 const authRouter = express.Router();
 
-const User = require('./users-model');
-const auth = require('./basicAuth');
-const oauth = require('./oauth/google');
-const bearerAuth = require('./bearerAuth');
+const User = require('./model/users-model');
+const auth = require('./auth/basicAuth');
+const oauth = require('./auth/oauth/google');
+const bearerAuth = require('./auth/bearerAuth');
 
 authRouter.get('/users', (req, res, next) => {
   User.find({})

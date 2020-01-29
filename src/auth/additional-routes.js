@@ -2,12 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-
-// const User = require('./users-model');
-// const auth = require('./basicAuth');
-// const oauth = require('./oauth/google');
-// const bearerAuth = require('./bearerAuth');
-const Roles = require('./roles-model');
+const Roles = require('../model/roles-model');
 
 const capabilities = {
   admin: ['create','read','update','delete', 'superuser'],
