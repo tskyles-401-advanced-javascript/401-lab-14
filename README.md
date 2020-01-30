@@ -7,10 +7,11 @@
 ### Links and Resources
 * [submission PR](https://github.com/tskyles-401-advanced-javascript/401-lab-14/pull/1)
 * [travis](https://travis-ci.com/tskyles-401-advanced-javascript/401-lab-14)
-* [back-end]()
+* [back-end](https://tskyles-401-lab-14.herokuapp.com/)
 
 #### Documentation
-* [api docs]() (API servers)
+* [api docs](https://tskyles-401-lab-14.herokuapp.com/api-docs)
+* [docs](https://tskyles-401-lab-14.herokuapp.com/docs) 
 
 ### Setup
 #### `.env` requirements (where applicable)
