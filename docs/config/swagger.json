@@ -12,6 +12,16 @@
     }
   ],
   "paths": {
+    "/": {
+      "post": {
+        "description": "Landing page for google oAuth",
+        "responses": {
+          "200": {
+            "description": "Displays a landing page for google oauth"
+          }
+        }
+      }
+    },
     "/users": {
       "get": {
         "description": "Get all Users",
@@ -54,7 +64,17 @@
         "description": "Documentation for code methods and functions",
         "responses": {
           "200": {
-            "description": "Go to website with documentation"
+            "description": "Displays html pages with documentation"
+          }
+        }
+      }
+    },
+    "/api-docs": {
+      "post": {
+        "description": "Documentation for api routes",
+        "responses": {
+          "200": {
+            "description": "Displays html page with swagger generated api-docs"
           }
         }
       }
