@@ -12,16 +12,6 @@
     }
   ],
   "paths": {
-    "/": {
-      "post": {
-        "description": "Landing page for google oAuth",
-        "responses": {
-          "200": {
-            "description": "Displays a landing page for google oauth"
-          }
-        }
-      }
-    },
     "/users": {
       "get": {
         "description": "Get all Users",
@@ -35,6 +25,16 @@
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "description": "Authenticates a user using bearer auth",
+        "responses": {
+          "200": {
+            "description": "Validates a user"
           }
         }
       }
@@ -55,26 +55,6 @@
         "responses": {
           "200": {
             "description": "Receives generated token"
-          }
-        }
-      }
-    },
-    "/docs": {
-      "post": {
-        "description": "Documentation for code methods and functions",
-        "responses": {
-          "200": {
-            "description": "Displays html pages with documentation"
-          }
-        }
-      }
-    },
-    "/api-docs": {
-      "post": {
-        "description": "Documentation for api routes",
-        "responses": {
-          "200": {
-            "description": "Displays html page with swagger generated api-docs"
           }
         }
       }
